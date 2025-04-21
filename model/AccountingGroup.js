@@ -1,26 +1,28 @@
+
 module.exports = (sequelize, DataTypes) => {
-    const AccountingType = sequelize.define('AccountingTypes', {
-        AccountingTypeID: {
+
+    const AccountingGroup = sequelize.define('AccountingGroups', {
+        AccountingGroupID: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
             allowNull: false,
         },
-        AccountingTypeName: {
+        AccountingGroupName: {
             type: DataTypes.STRING,
             allowNull: false,
 
         },
-        AccountingTypeCode: {
+        AccountingGroupCode: {
             type: DataTypes.STRING,
             allowNull: false,
 
-        },
-        Status: {
-            type: DataTypes.STRING,
+        },Status
+        :{
+            type:DataTypes.STRING,
             allowNull: false,
-
-        },
+        
+        }
     })
-    return AccountingType;
+    return AccountingGroup;
 }
