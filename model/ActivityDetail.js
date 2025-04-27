@@ -1,22 +1,28 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Currency = sequelize.define('Currencies', {
-        CurrencyID: {
+    const ActivityDetail    = sequelize.define('ActivityDetails', {
+        ActivityDetailID: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUID4,
             primaryKey: true,
             allowNull: false,
         },
-        CurrencyName: {
+        Detail: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull:  false,
 
+        }, Amount
+        :{
+            type:DataTypes.FLOAT,
+            allowNull: false,
+        
         },
-        CurrencyCode: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        Date: {
 
+            type: DataTypes.DATE,
+            allowNull: false,
+        
         }
         ,Status
         :{
@@ -28,5 +34,5 @@ module.exports = (sequelize, DataTypes) => {
       
     })
 
-    return Currency;
+    return ActivityDetail;
 }

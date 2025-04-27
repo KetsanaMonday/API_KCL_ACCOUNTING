@@ -1,19 +1,19 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Currency = sequelize.define('Currencies', {
-        CurrencyID: {
+    const TransitionType = sequelize.define('TransitionTypes', {
+        TransitionTypeID: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUID4,
             primaryKey: true,
             allowNull: false,
         },
-        CurrencyName: {
+        TransitionTypeName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull:  false,
 
         },
-        CurrencyCode: {
+        TransitionTypeCode: {
             type: DataTypes.STRING,
             allowNull: false,
 
@@ -28,5 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       
     })
 
-    return Currency;
+    return TransitionType;
 }
+

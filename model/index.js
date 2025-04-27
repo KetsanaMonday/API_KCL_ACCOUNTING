@@ -37,66 +37,98 @@ const AccountingGroupDetail = require('./AccountingGroupDetail')(sequelize, Data
 const Accounting = require('./Accounting')(sequelize, DataTypes);
 const AccountingActivity = require('./AccountingActivity')(sequelize, DataTypes);
 const Currency = require('./Currency')(sequelize, DataTypes);
+const TransitionType = require('./TransitionType')(sequelize, DataTypes);
+
+const ActivityType = require('./ActivityType')(sequelize, DataTypes);
+
+const ActivityDetail = require('./ActivityDetail')
+    (sequelize, DataTypes);
 
 sequelize.sync({
-    force: true  
+    force: false
 }).then(() => {
     console.log('yes re-sync done!');
-    
+
 })
 
-const User = sequelize.define('user', { name: DataTypes.STRING }, { timestamps: false });
-const Task = sequelize.define('task', { name: DataTypes.STRING }, { timestamps: false });
-const Tool = sequelize.define(
-  'tool',
-  {
-    name: DataTypes.STRING,
-    size: DataTypes.STRING,
-  },
-  { timestamps: false },
-);
-User.hasMany(Task);
-Task.belongsTo(User);
-User.hasMany(Tool, { as: 'Instruments' });
 
-AccountingType.hasMany(AccountingGroup,{
+AccountingType.hasMany(AccountingGroup, {
     foreignKey: 'AccountingTypeID',
     sourceKey: 'AccountingTypeID'
 });
-AccountingGroup.belongsTo(AccountingType,{
+AccountingGroup.belongsTo(AccountingType, {
     foreignKey: 'AccountingTypeID',
     targetKey: 'AccountingTypeID'
 });
-AccountingGroup.hasMany(AccountingGroupDetail,{
+//FK AccountingType//
+
+AccountingGroup.hasMany(AccountingGroupDetail, {
     foreignKey: 'AccountingGroupID',
     sourceKey: 'AccountingGroupID'
 });
-AccountingGroupDetail.belongsTo(AccountingGroup,{
+AccountingGroupDetail.belongsTo(AccountingGroup, {
     foreignKey: 'AccountingGroupID',
     targetKey: 'AccountingGroupID'
 });
-AccountingGroupDetail.hasMany(Accounting,{
+//FK AccountingGroup//
+
+AccountingGroupDetail.hasMany(Accounting, {
     foreignKey: 'AccountingGroupDetailID',
     sourceKey: 'AccountingGroupDetailID'
 });
-Accounting.belongsTo(AccountingGroupDetail,{
+Accounting.belongsTo(AccountingGroupDetail, {
     foreignKey: 'AccountingGroupDetailID',
     targetKey: 'AccountingGroupDetailID'
 });
-Accounting.hasMany(AccountingActivity,{
+//FK AccountingGroupDetail//
+
+Accounting.hasMany(ActivityDetail, {
     foreignKey: 'AccountingID',
     sourceKey: 'AccountingID'
 });
-AccountingActivity.belongsTo(Accounting,{
+ActivityDetail.belongsTo(Accounting, {
     foreignKey: 'AccountingID',
     targetKey: 'AccountingID'
 });
-Currency.hasMany(AccountingActivity,{
+//FK Accounting//
+
+
+Currency.hasMany(ActivityDetail, {
     foreignKey: 'CurrencyID',
     sourceKey: 'CurrencyID'
 });
-AccountingActivity.belongsTo(Currency,{
+ActivityDetail.belongsTo(Currency, {
     foreignKey: 'CurrencyID',
     targetKey: 'CurrencyID'
 });
-module.exports = {AccountingType,AccountingGroup,AccountingGroupDetail,Accounting,User,Task,Tool};
+//FK Currency//
+ActivityType.hasMany(ActivityDetail, {
+    foreignKey: 'ActivityTypeID',
+    sourceKey: 'ActivityTypeID'
+});
+ActivityDetail.belongsTo(ActivityType, {
+    foreignKey: 'ActivityTypeID',
+    targetKey: 'ActivityTypeID'
+});
+//FK ActivityType//
+TransitionType.hasMany(ActivityDetail, {
+    foreignKey: 'TransitionTypeID',
+    sourceKey: 'TransitionTypeID'
+});
+ActivityDetail.belongsTo(TransitionType, {
+    foreignKey: 'TransitionTypeID',
+    targetKey: 'TransitionTypeID'
+});
+//FK TransitionType//
+
+
+module.exports = {
+    AccountingType,
+    AccountingGroup,
+    AccountingGroupDetail,
+    Accounting,
+    TransitionType,
+    ActivityDetail, 
+    ActivityType,   
+    Currency
+};

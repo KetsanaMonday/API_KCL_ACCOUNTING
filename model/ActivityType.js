@@ -1,19 +1,19 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Currency = sequelize.define('Currencies', {
-        CurrencyID: {
+    const ActivityType = sequelize.define('ActivityTypes', {
+        ActivityTypeID: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUID4,
             primaryKey: true,
             allowNull: false,
         },
-        CurrencyName: {
+        ActivityTypeName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull:  false,
 
         },
-        CurrencyCode: {
+        ActivityTypeCode: {
             type: DataTypes.STRING,
             allowNull: false,
 
@@ -28,5 +28,5 @@ module.exports = (sequelize, DataTypes) => {
       
     })
 
-    return Currency;
+    return ActivityType;
 }
